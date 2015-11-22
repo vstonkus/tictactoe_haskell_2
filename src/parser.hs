@@ -1,4 +1,4 @@
-module Parser
+module Parser (Action, Board, decode, encode, getV, getX, getY)
 where
 
 import Data.List
@@ -7,8 +7,6 @@ import Text.Printf
 --------------(  V ,  X ,  Y )
 type Action = (Char, Int, Int)
 type Board = [Action]
-
-msg  = "ld1:v1:x1:xi0e1:yi2eed1:v1:o1:xi1e1:yi0eed1:v1:x1:xi0e1:yi0eee"
 
 decode :: String -> Board
 decode ('l' : msg) = 
@@ -63,7 +61,6 @@ match mch ((b,v) : rest) =
 
 
 
-
 getV :: Action -> Char
 getV (v0,_,_) = v0
 
@@ -74,14 +71,10 @@ getY :: Action -> Int
 getY (_,_,v2) = v2
 
 
-
-
-
 encode :: Board -> String
 encode squares = printf "l%se" actions
     where actions = intercalate "" sqStrings
           sqStrings = map squareToString squares
-
 
 squareToString :: Action -> String
 squareToString (v, x, y) = printf format v x y
